@@ -1,0 +1,38 @@
+  - name: Create publicsite directory
+    file:
+      path: /home/teemu/publicsite
+      state: directory
+      mode: '0755'
+
+  - name: Create index.html
+    copy:
+      dest: /home/teemu/publicsite/index.html
+      content: |
+        <!DOCTYPE html>
+        <html>
+        <head>
+        <meta charset="UTF-8">
+        <title>Teemun oma sivu</title>
+        </head>
+        <body>
+        <h1>Teemun oma sivu</h1>
+        <p>Tämä tulee kotihakemistosta</p>
+        </body>
+        </html>
+      mode: '0644'
+
+  - name: Set Apache documentRoot
+    replace:
+      path: /etc/apache2/sites-available/000-default.conf
+      regexp: 'DocumentRoot /var/www/html'
+      replace: 'DocumentRoot /home/teemu/publicsite'
+    notify: restart apache
+
+  - name: Allow access to home directory
+    blockinfile:
+      path: /etc/apache2/apache2.conf
+      block: |
+        <Directory /home/teemu/publicsite>
+            Require all granted
+        </Directory>
+    notify: restart apache

@@ -1,0 +1,4 @@
+  - name: Add SSH key for antero
+    authorized_key:
+      user: antero
+      key: "{{ lookup('file', '/home/teemu/.ssh/id_ed25519.pub') }}"

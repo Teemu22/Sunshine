@@ -1,0 +1,7 @@
+  - name: Install packages
+    apt:
+      name:
+        - tree
+        - htop
+      state: present
+      update_cache: yes

@@ -1,0 +1,6 @@
+  - name: Create user antero
+    user:
+      name: antero
+      create_home: yes
+      state: present
+
